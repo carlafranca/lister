@@ -1,10 +1,11 @@
-#Github repo Lister
+# Github repo Lister
 
 Single-page App to retrieve github organizations plubic repositories
 
 ## Installation
 
 Create a github presonal access token to increase the API Rate limit.
+
 Setting > developer settings > personal access token
 
 Add the token to the .env file on REACT_APP_LISTER_API_TOKEN=xxxxxxxx
