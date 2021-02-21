@@ -6,7 +6,6 @@ const SortCards = ({ sorted, users }) => {
 
   const handleSortButton = ({ target }) => {
     const sortKey = target.dataset.sort;
-    console.log(sortKey);
     setIsActive(sortKey);
     sorted(users, sortKey === "alpha" ? "name" : "stargazers_count");
   };
