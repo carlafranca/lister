@@ -7,8 +7,8 @@ import { sortArr } from "../appUtils";
 import useFetch from "../hooks/useFetch.js";
 
 const App = () => {
+  const [query, setQuery] = useState("");
   const [org, setOrg] = useState("");
-  const [searchName, setSearchName] = useState("");
   const { status, data } = useFetch(org);
   const [sortedData, setSortedData] = useState(data);
 
@@ -22,12 +22,12 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setOrg(searchName);
-    setSearchName("");
+    setOrg(query);
+    setQuery("");
   };
 
   const handleChange = (e) => {
-    setSearchName(e.target.value);
+    setQuery(e.target.value);
   };
 
   return (
@@ -36,7 +36,7 @@ const App = () => {
         title="Github Repo Lister"
         onSubmit={handleSubmit}
         onChange={handleChange}
-        orgName={searchName}
+        orgName={query}
       />
       <Wrapper>
         {status === "rejected" ? (
@@ -50,9 +50,7 @@ const App = () => {
           </>
         ) : (
           <>
-            <MainTitle>
-              Listing repositories for the user "{searchName}" :
-            </MainTitle>
+            <MainTitle>Listing repositories for the user "{org}" :</MainTitle>
             <SortCards users={sortedData} sorted={sort} />
             <CardList profiles={sortedData} />
           </>

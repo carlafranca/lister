@@ -10,25 +10,25 @@ const useFetch = (orgName) => {
   useEffect(() => {
     if (!orgName) return;
 
-    const fetchData = () => {
-      fetch(`${baseUrl}/orgs/${orgName}/repos?type=public`, {
-        headers: {
-          Accept: "application/vnd.github.v3+json",
-          Authorization: `Token ${gitToken}`,
-        },
-      })
-        .then((res) => {
-          if (res.ok) return res.json();
-          return setStatus("rejected");
-        })
-        .then((result) => {
-          getReposWithStars(result);
-        })
-        .catch((err) => {
-          setStatus("rejected");
-        });
+    //Get Org repos, this payload doesn't have the stargazers_count
+    const fetchData = async () => {
+      const reponse = await fetch(
+        `${baseUrl}/orgs/${orgName}/repos?type=public`,
+        {
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+            Authorization: `Token ${gitToken}`,
+          },
+        }
+      );
+      if (!reponse.ok) return setStatus("rejected");
+      const orgRepos = await reponse.json();
+      getReposWithStars(orgRepos);
     };
 
+    fetchData().catch((error) => error.message);
+
+    //Get Repos with stargazers_count
     const getReposWithStars = (result) => {
       const promises = result.map((repo) => {
         return fetch(`${baseUrl}/repos/${orgName}/${repo.name}`, {
@@ -36,20 +36,17 @@ const useFetch = (orgName) => {
             Accept: "application/vnd.github.v3+json",
             Authorization: `Token ${gitToken}`,
           },
-        })
-          .then((reponse) => {
-            return reponse.json();
-          })
-          .catch((error) => {
-            setStatus("rejected");
-          });
+        }).then((reponse) => {
+          if (!reponse.ok) return setStatus("rejected");
+          return reponse.json();
+        });
       });
 
       Promise.all(promises)
-        .then((res) => {
-          if (res.length === 0) return setStatus("rejected");
-
-          const sort = sortArr(res, "stargazers_count");
+        .then((repos) => {
+          if (repos.length === 0) return setStatus("rejected");
+          //sort repos
+          const sort = sortArr(repos, "stargazers_count");
           setStatus("resolved");
           setData(sort);
         })
