@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import Header from "./Header";
 import SortCards from "./SortCards";
 import CardList from "./CardList";
@@ -37,24 +38,46 @@ const App = () => {
         onChange={handleChange}
         orgName={searchName}
       />
-      <main className="main container">
+      <Wrapper>
         {status === "rejected" ? (
-          <h2>The organization could not be found!</h2>
+          <MainTitle>The organization could not be found!</MainTitle>
         ) : status === "idle" ? (
           <>
-            <h2>Use the form above to list users repositories</h2>
-            <h3>Only public Organizations repo will be displayed</h3>
+            <MainTitle>Use the form above to list users repositories</MainTitle>
+            <SubTitle>
+              Only public Organizations repo will be displayed
+            </SubTitle>
           </>
         ) : (
           <>
-            <h2>Listing repositories for the user "{searchName}" :</h2>
+            <MainTitle>
+              Listing repositories for the user "{searchName}" :
+            </MainTitle>
             <SortCards users={sortedData} sorted={sort} />
             <CardList profiles={sortedData} />
           </>
         )}
-      </main>
+      </Wrapper>
     </>
   );
 };
 
 export default App;
+
+const Wrapper = styled.main`
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-font-smoothing: antialiased;
+
+  max-width: 1024px;
+  margin: auto;
+`;
+
+const MainTitle = styled.h2`
+  font-size: 2rem;
+  font-weight: 400;
+`;
+
+const SubTitle = styled.h3`
+  font-size: 1.5rem;
+  font-weight: 400;
+`;

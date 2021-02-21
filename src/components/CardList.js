@@ -1,12 +1,23 @@
 import React from "react";
+import styled from "styled-components";
 import Card from "./Card";
 
-export default function CardList({ profiles }) {
+function CardList({ profiles }) {
   return (
-    <div className="cards">
+    // <div className="cards">
+    <Wrapper>
       {profiles.map((user) =>
         user.html_url ? <Card key={user.id} user={user} /> : null
       )}
-    </div>
+      {/* </div> */}
+    </Wrapper>
   );
 }
+
+export default CardList;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+`;
