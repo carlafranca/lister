@@ -16,7 +16,7 @@ Add the token to the .env file on REACT_APP_LISTER_API_TOKEN=xxxxxxxx
 - The new version (V4) comes with the GraphiQL, maybe it would be a better option to reduce the calls/payload.
 - Also I Didn't have the time to finish styling the app, testing crossbrowser, work on accessibility and other improvements.
 
-### Feractor/hotfix
+### Refactor/hotfix
 
 With a bit of extra time I did some improvements.
 
