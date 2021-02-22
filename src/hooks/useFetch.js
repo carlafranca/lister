@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { sortArr } from "../appUtils";
+
 const gitToken = process.env.REACT_APP_LISTER_API_TOKEN;
 const baseUrl = process.env.REACT_APP_API_URL;
 
@@ -45,10 +45,8 @@ const useFetch = (orgName) => {
       Promise.all(promises)
         .then((repos) => {
           if (repos.length === 0) return setStatus("rejected");
-          //sort repos
-          const sort = sortArr(repos, "stargazers_count");
           setStatus("resolved");
-          setData(sort);
+          setData(repos);
         })
         .catch((error) => {
           setStatus("rejected");

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import TextInput from "./common/TextInput";
 
-const Header = ({ title, onSubmit, orgName, onChange }) => {
+const Header = ({ title, onSubmit, orgRef }) => {
   return (
     <Wrapper>
       <HeadWrapper>
@@ -12,8 +12,7 @@ const Header = ({ title, onSubmit, orgName, onChange }) => {
             <TextInput
               name="search"
               label="Search User"
-              value={orgName}
-              onChange={onChange}
+              orgRef={orgRef}
               placeholder="Search Users/Orgs"
             />
             <button type="submit">Search</button>

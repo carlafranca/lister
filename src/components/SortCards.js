@@ -6,8 +6,9 @@ const SortCards = ({ sorted, users }) => {
 
   const handleSortButton = ({ target }) => {
     const sortKey = target.dataset.sort;
+    const sortType = target.dataset.type;
     setIsActive(sortKey);
-    sorted(users, sortKey === "alpha" ? "name" : "stargazers_count");
+    sorted(users, sortKey === "alpha" ? "name" : "stargazers_count", sortType);
   };
 
   return (
@@ -16,6 +17,7 @@ const SortCards = ({ sorted, users }) => {
       <WrapSortControl>
         <SortButton
           data-sort="alpha"
+          data-type="alpha"
           className={isActive === "alpha" ? "active " : ""}
           onClick={handleSortButton}
         >
@@ -23,6 +25,7 @@ const SortCards = ({ sorted, users }) => {
         </SortButton>
         <SortButton
           data-sort="stars"
+          data-type="int"
           className={isActive === "stars" ? "active " : ""}
           onClick={handleSortButton}
         >

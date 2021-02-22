@@ -1,33 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Header from "./Header";
 import SortCards from "./SortCards";
 import CardList from "./CardList";
-import { sortArr } from "../appUtils";
 import useFetch from "../hooks/useFetch.js";
 
+import useSort from "../hooks/useSort";
+
 const App = () => {
-  const [query, setQuery] = useState("");
   const [org, setOrg] = useState("");
   const { status, data } = useFetch(org);
-  const [sortedData, setSortedData] = useState(data);
+  const [isSorted, setIsSorted] = useSort();
+
+  const orgRef = useRef(null);
 
   useEffect(() => {
-    setSortedData(data);
-  }, [data, status]);
+    if (data.length === 0) return;
 
-  const sort = (list, sortProp) => {
-    setSortedData(sortArr(list, sortProp));
+    setIsSorted({
+      type: "int",
+      payload: { list: data, sortProp: "stargazers_count" },
+    });
+  }, [data]);
+
+  const sort = (list, sortProp, sortType) => {
+    setIsSorted({ type: sortType, payload: { list, sortProp } });
+    //setSortedData(isSorted);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setOrg(query);
-    setQuery("");
-  };
-
-  const handleChange = (e) => {
-    setQuery(e.target.value);
+    setOrg(orgRef.current.value);
+    orgRef.current.value = null;
   };
 
   return (
@@ -35,8 +39,8 @@ const App = () => {
       <Header
         title="Github Repo Lister"
         onSubmit={handleSubmit}
-        onChange={handleChange}
-        orgName={query}
+        orgName={org}
+        orgRef={orgRef}
       />
       <Wrapper>
         {status === "rejected" ? (
@@ -51,8 +55,8 @@ const App = () => {
         ) : (
           <>
             <MainTitle>Listing repositories for the user "{org}" :</MainTitle>
-            <SortCards users={sortedData} sorted={sort} />
-            <CardList profiles={sortedData} />
+            <SortCards users={isSorted} sorted={sort} />
+            <CardList profiles={isSorted} />
           </>
         )}
       </Wrapper>

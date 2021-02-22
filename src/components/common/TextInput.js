@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function TextInput({ name, label, value, onChange, placeholder }) {
+function TextInput({ name, label, orgRef, placeholder }) {
   return (
     <>
       <Label htmlFor={name}>{label}</Label>
@@ -9,9 +9,9 @@ function TextInput({ name, label, value, onChange, placeholder }) {
         type="text"
         name={name}
         id={name}
+        ref={orgRef}
         placeholder={placeholder}
-        onChange={onChange}
-        value={value}
+        autocomplete="off"
       />
     </>
   );
