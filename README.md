@@ -2,7 +2,7 @@
 
 Single-page App to retrieve github organizations plubic repositories
 
-*plese view refactor banch with some improvements.
+*please view refactor branch with some improvements.
 
 ## Installation
 
