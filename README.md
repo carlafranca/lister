@@ -23,4 +23,4 @@ With a bit of extra time I did some improvements.
 - Refactor style using styled-content
 - Fixed major peformance issue(render). changed form/input to an uncontrolled component using useRef.
 - Cleaned useFetch code
-- Created a useSort hook. Did the basics for a reusable component, need urgent improvments (at moment using useReduce)
+- Created a useSort hook. Did the basics for a reusable component, it needs improvments (at moment using useReduce)
