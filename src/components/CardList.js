@@ -4,12 +4,10 @@ import Card from "./Card";
 
 function CardList({ profiles }) {
   return (
-    // <div className="cards">
     <Wrapper>
       {profiles.map((user) =>
         user.html_url ? <Card key={user.id} user={user} /> : null
       )}
-      {/* </div> */}
     </Wrapper>
   );
 }

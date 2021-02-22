@@ -15,8 +15,6 @@ const App = () => {
   const orgRef = useRef(null);
 
   useEffect(() => {
-    if (data.length === 0) return;
-
     setIsSorted({
       type: "int",
       payload: { list: data, sortProp: "stargazers_count" },
@@ -25,7 +23,6 @@ const App = () => {
 
   const sort = (list, sortProp, sortType) => {
     setIsSorted({ type: sortType, payload: { list, sortProp } });
-    //setSortedData(isSorted);
   };
 
   const handleSubmit = (e) => {
