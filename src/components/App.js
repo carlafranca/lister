@@ -21,7 +21,7 @@ const App = () => {
       type: "int",
       payload: { list: data, sortProp: "stargazers_count" },
     });
-  }, [data]);
+  }, [data, setIsSorted]);
 
   const sort = (list, sortProp, sortType) => {
     setIsSorted({ type: sortType, payload: { list, sortProp } });
