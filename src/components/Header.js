@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import TextInput from "./common/TextInput";
 
-const Header = ({ title, onSubmit, orgRef }) => {
+const Header = ({ title, onSubmit }) => {
+  const [input, setInput] = useState("");
+
+  const onSearchSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(input);
+    setInput("");
+  };
+
   return (
     <Wrapper>
       <HeadWrapper>
         <MainTitle>{title}</MainTitle>
         <SearchBarWrapper>
-          <form onSubmit={onSubmit}>
-            <TextInput
+          <form onSubmit={onSearchSubmit}>
+            <Label htmlFor="search">Search User</Label>
+            <Input
+              type="text"
+              id="search"
               name="search"
-              label="Search User"
-              orgRef={orgRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
               placeholder="Search Users/Orgs"
             />
             <button type="submit">Search</button>
@@ -74,5 +84,32 @@ const SearchBarWrapper = styled.div`
       border: none;
       border-radius: 0 5px 5px 0;
     }
+  }
+`;
+
+const Label = styled.label`
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+`;
+
+const Input = styled.input`
+  color: #ffffff;
+  background-color: transparent;
+  width: 100%;
+  border: none;
+  padding: 0 15px;
+
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    color: #ffffff;
+  }
+  :-ms-input-placeholder {
+    color: #ffffff;
   }
 `;

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const SortCards = ({ sorted, users }) => {
+const SortCards = ({ sorted }) => {
   const [isActive, setIsActive] = useState("stars");
 
   const handleSortButton = ({ target }) => {
     const sortKey = target.dataset.sort;
     const sortType = target.dataset.type;
     setIsActive(sortKey);
-    sorted(users, sortKey === "alpha" ? "name" : "stargazers_count", sortType);
+    sorted(sortKey === "alpha" ? "name" : "stargazers_count", sortType);
   };
 
   return (

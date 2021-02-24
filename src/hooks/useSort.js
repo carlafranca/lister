@@ -1,25 +1,20 @@
-import { useReducer } from "react";
+import { useState } from "react";
 
-const useSort = (initialValue = []) => {
-  function sortArray(state, action) {
-    switch (action.type) {
-      case "alpha":
-        initialValue = [...action.payload.list].sort((a, b) =>
-          b[action.payload.sortProp].localeCompare(a[action.payload.sortProp])
-        );
-        return initialValue;
-      case "int":
-        initialValue = [...action.payload.list].sort(
-          (a, b) => b[action.payload.sortProp] - a[action.payload.sortProp]
-        );
-        return initialValue;
+const useSort = (initialState = []) => {
+  const [isSorted, regularSetState] = useState(initialState);
 
-      default:
-        return initialValue;
+  const setIsSorted = (list, sortProp, sortType) => {
+    if (sortType === "alpha") {
+      regularSetState(
+        [...list].sort((a, b) => b[sortProp].localeCompare(a[sortProp]))
+      );
     }
-  }
+    if (sortType === "int") {
+      regularSetState([...list].sort((a, b) => b[sortProp] - a[sortProp]));
+    }
+  };
 
-  return useReducer(sortArray, initialValue);
+  return [isSorted, setIsSorted];
 };
 
 export default useSort;
